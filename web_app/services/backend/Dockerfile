@@ -13,4 +13,4 @@ COPY src/ .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--reload"]
+CMD ["python","manage.py","makemigrations","&&","python","manage.py","migrate","&&","python","manage.py","runserver","0.0.0.0:8000"]
