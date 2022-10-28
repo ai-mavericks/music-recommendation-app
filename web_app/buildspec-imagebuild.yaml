@@ -1,0 +1,32 @@
+version: 0.2
+env:
+  secrets-manager:
+    DOCKERHUB_PASS: dockerhub:password
+    DOCKERHUB_USERNAME: dockerhub:username
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to the DockerHub.....
+      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
+      - echo Logging in to Amazon ECR.....
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 194792336910.dkr.ecr.us-east-2.amazonaws.com
+  build:
+    commands:
+      - echo Building the Frontend Docker image...
+      - cd services/frontend/
+      - docker build -t musicdome-repo_frontend -f Dockerfile-prod .
+      - echo Building the Backend Docker image...
+      - cd ../backend/
+      - docker build -t musicdome-repo_backend -f Dockerfile .
+  post_build:
+    commands:
+      - echo Renaming the Frontend Docker image...
+      - cd ../../frontend/
+      - docker tag musicdome-repo_frontend 194792336910.dkr.ecr.us-east-1.amazonaws.com/musicdome-repo_frontend:latest
+      - echo Pushing the Frontend Docker image to ECR...
+      - docker push 194792336910.dkr.ecr.us-east-1.amazonaws.com/musicdome-repo_frontend:latest
+      - echo Renaming the Backend Docker image...
+      - cd ../backend/
+      - docker tag musicdome-repo_backend 194792336910.dkr.ecr.us-east-1.amazonaws.com/musicdome-repo_backend:latest
+      - echo Pushing the Backend Docker image to ECR...
+      - docker push 194792336910.dkr.ecr.us-east-1.amazonaws.com/musicdome-repo_backend:latest
