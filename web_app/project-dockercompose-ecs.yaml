@@ -4,7 +4,3 @@ services:
     image: 194792336910.dkr.ecr.us-east-2.amazonaws.com/musicdome-repo_backend
     ports:
       - 8000
-  frontend:
-    image: 194792336910.dkr.ecr.us-east-2.amazonaws.com/musicdome-repo_frontend
-    ports:
-      - 80
