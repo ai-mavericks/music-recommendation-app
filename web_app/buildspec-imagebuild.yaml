@@ -7,9 +7,9 @@ phases:
   pre_build:
     commands:
       - echo Logging in to the DockerHub.....
-      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
+      - sudo docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
       - echo Logging in to Amazon ECR.....
-      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 194792336910.dkr.ecr.us-east-2.amazonaws.com
+      - aws ecr get-login-password --region us-east-2 | sudo docker login --username AWS --password-stdin 194792336910.dkr.ecr.us-east-2.amazonaws.com
   build:
     commands:
       - echo Building the Backend Docker image...
