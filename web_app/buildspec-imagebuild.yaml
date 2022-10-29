@@ -4,11 +4,6 @@ env:
     DOCKERHUB_USERNAME: DOCKERHUB_USERNAME
     DOCKERHUB_PASS: DOCKERHUB_PASSWORD
 phases:
-  install:
-    commands:
-      - apt-get update
-      - apt install docker.io -y
-      - apt install sudo
   pre_build:
     commands:
       - echo Logging in to the DockerHub.....
