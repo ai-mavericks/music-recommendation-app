@@ -13,7 +13,7 @@ phases:
   build:
     commands:
       - echo Building the Backend Docker image...
-      - cd services/backend/
+      - cd web_app/services/backend/
       - docker build -t musicdome-repo_backend -f Dockerfile-prod .
   post_build:
     commands:
