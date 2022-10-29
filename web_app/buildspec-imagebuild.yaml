@@ -18,6 +18,6 @@ phases:
   post_build:
     commands:
       - echo Renaming the Backend Docker image...
-      - docker tag musicdome-repo_backend 194792336910.dkr.ecr.us-east-2.amazonaws.com/musicdome-repo:latest
+      - docker tag musicdome-repo_backend 194792336910.dkr.ecr.us-east-2.amazonaws.com/musicdome-repo_backend:latest
       - echo Pushing the Backend Docker image to ECR...
-      - docker push 194792336910.dkr.ecr.us-east-2.amazonaws.com/musicdome-repo:latest
+      - docker push 194792336910.dkr.ecr.us-east-2.amazonaws.com/musicdome-repo_backend:latest
