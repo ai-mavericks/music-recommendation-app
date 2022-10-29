@@ -18,7 +18,7 @@ phases:
     commands:
       - echo Building the Backend Docker image...
       - cd services/backend/
-      - docker build -t musicdome-repo_backend -f Dockerfile .
+      - docker build -t musicdome-repo_backend -f Dockerfile-prod .
   post_build:
     commands:
       - echo Renaming the Backend Docker image...
