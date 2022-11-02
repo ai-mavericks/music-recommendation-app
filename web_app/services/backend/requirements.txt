@@ -1,2 +1,9 @@
 django==4.1
 djangorestframework==3.12.4
+django-cors-headers==3.13.0
+djangorestframework-simplejwt==5.2.2
+pytz==2022.6
+django-filter==22.1
+pymysql
+psycopg2
+psycopg2-binary

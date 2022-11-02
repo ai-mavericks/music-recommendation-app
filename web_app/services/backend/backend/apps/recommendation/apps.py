@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MusicConfig(AppConfig):
+class RecommendationConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "backend.apps.music"
+    name = "backend.apps.recommendation"
