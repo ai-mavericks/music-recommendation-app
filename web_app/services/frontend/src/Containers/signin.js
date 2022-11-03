@@ -44,6 +44,7 @@ export default function SignIn() {
   const [userName, setUserName] = useState('rishabh2192');
   const [password, setPassword] = useState('password@1234');
   const [loginFailed, setLoginFailed] = useState(false);
+  const [loginStarted, setLoginStarted] = useState(false);
   const navigate = useNavigate();
 
 
@@ -61,6 +62,7 @@ export default function SignIn() {
     )
   }
 
+
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -70,11 +72,13 @@ export default function SignIn() {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
+    
     var data = await APICalls.Login(userName,password)
     if(data)
     {
-      console.log("logged In")
+      setLoginStarted(true)
       navigate(ROUTES.DASHBOARD)
+      setLoginStarted(false)
     }
     else{
       setLoginFailed(true)
@@ -148,14 +152,24 @@ export default function SignIn() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             /> */}
-            <Button
+            {!loginStarted &&<Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
+            </Button>}
+            {loginStarted && <Button
+              type="submit"
+              fullWidth
+              disabled
+              variant="contained"
+              sx={{ mt: 3, mb: 2, backgroundColor: 'green' }}
+            >
+              Logging In
             </Button>
+            }
             <Grid container>
               {/* <Grid item xs>
                 <Link href="/resetpassword" variant="body2">
