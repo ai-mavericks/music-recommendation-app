@@ -40,6 +40,7 @@ THIRD_PARTY_APPS = [
 ]
 
 USER_APPS = [
+    "backend.apps.musicdome.apps.MusicdomeConfig",
     "backend.apps.recommendation.apps.RecommendationConfig",
     "backend.apps.authentication.apps.AuthenticationConfig",
 ]
