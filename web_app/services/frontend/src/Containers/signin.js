@@ -15,7 +15,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import APICalls from '../Helpers/api'
-import Login from '../Helpers/api'
+import {useState} from 'react'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import * as ROUTES from "../Helpers/routes"
+import { useNavigate } from 'react-router-dom';
+
+// import { connect } from 'react-redux';
+// import * as actions from '../../actions'; 
 
 function Copyright(props) {
   return (
@@ -33,15 +40,50 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    APICalls.Login()
-    const data = new FormData(event.currentTarget);
 
+  const [userName, setUserName] = useState('rishabh2192');
+  const [password, setPassword] = useState('password@1234');
+  const [loginFailed, setLoginFailed] = useState(false);
+  const navigate = useNavigate();
+
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const errorSnackbar = () => {
+    return(
+      <Snackbar open={loginFailed} autoHideDuration={3000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose}  severity="error" sx={{ width: '100%' }}>
+          Wrong Credentials. Please try again
+        </Alert>
+      </Snackbar>
+    )
+  }
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setLoginFailed(false);
+  };
+
+  const handleSubmit = async(event) => {
+    event.preventDefault();
+    var data = await APICalls.Login(userName,password)
+    if(data)
+    {
+      console.log("logged In")
+      navigate(ROUTES.DASHBOARD)
+    }
+    else{
+      setLoginFailed(true)
+    }
   };
 
   return (
     <ThemeProvider theme={theme}>
+      {errorSnackbar()}
       <AppBar
         position="absolute"
         color="default"
@@ -78,10 +120,14 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              value={userName}
+              onChange={(event) => {
+                setUserName(event.target.value);
+              }}
+              autoComplete="username"
               autoFocus
             />
             <TextField
@@ -92,12 +138,16 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -107,11 +157,11 @@ export default function SignIn() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Link href="/resetpassword" variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}

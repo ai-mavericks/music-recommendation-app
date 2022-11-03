@@ -2,11 +2,11 @@ import axios from 'axios'
 import * as React from 'react';
 
 
-const apiurl = 'http://localhost:8000/'
+const apiurl = 'http://localhost:8000/api/'
 
 
-const Login = (username,password) => {
-
+const Login = async(username,password) => {
+    console.log(username,password)
     var FormData = require('form-data');
     var data = new FormData();
     data.append('username', username);
@@ -16,23 +16,22 @@ const Login = (username,password) => {
     method: 'post',
     url: apiurl+'auth/login/',
     headers: { 
-        ...data.getHeaders()
     },
     data : data
     };
 
-    axios(config)
-    .then(function (response) {
-    console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-    console.log(error);
-    });
-
-    return({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    try{
+        var res = await axios(config)
+        .then(function (response) {
+        return((response));
+        })
+        .catch(function (error) {
+        return(error);
+        });
+        var data = await res.data
+        return data
+    }
+    catch{ return null}
 };
 
 
