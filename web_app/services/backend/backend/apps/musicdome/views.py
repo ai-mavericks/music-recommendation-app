@@ -4,10 +4,12 @@ from .serializers import (
     GenreSerializer,
     ArtistSerializer,
     AlbumSerializer,
+    UserPreferencesSerializer,
 )
 from rest_framework.permissions import IsAuthenticated
-from .models import Track, Album, Artist, Genre
+from .models import Track, Album, Artist, Genre, UserPreferences
 from .pagination import TrackSetPagination
+from .permissions import OwnerProfilePermission
 
 
 class TrackViewSet(ModelViewSet):
@@ -33,3 +35,11 @@ class AlbumViewSet(ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = AlbumSerializer
     queryset = Album.objects.all().order_by("_id")
+
+
+class UserPreferencesViewSet(ModelViewSet):
+
+    serializer_class = UserPreferencesSerializer
+    queryset = UserPreferences.objects.all()
+    pagination_class = None
+    # permission_classes = (IsAuthenticated, OwnerProfilePermission)

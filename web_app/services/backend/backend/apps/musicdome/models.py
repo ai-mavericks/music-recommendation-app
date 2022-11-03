@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Album(models.Model):
@@ -39,3 +40,9 @@ class Track(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class UserPreferences(models.Model):
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.DO_NOTHING)
+    genres = models.ManyToManyField(Genre)
+    artists = models.ManyToManyField(Artist)

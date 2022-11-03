@@ -2,12 +2,13 @@ from rest_framework.views import APIView
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from .permissions import OwnerProfilePermission
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from .serializers import (
     RegisterSerializer,
     ChangePasswordSerializer,
-    UpdateProfileSerializer,
+    ProfileSerializer,
 )
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -27,7 +28,13 @@ class ChangePasswordView(generics.UpdateAPIView):
 class UpdateProfileView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
-    serializer_class = UpdateProfileSerializer
+    serializer_class = ProfileSerializer
+
+
+class GetProfileView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated, OwnerProfilePermission)
+    serializer_class = ProfileSerializer
 
 
 class LogoutView(APIView):
