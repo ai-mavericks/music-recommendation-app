@@ -9,8 +9,10 @@ from .serializers import (
     RegisterSerializer,
     ChangePasswordSerializer,
     ProfileSerializer,
+    TokenObtainPairSerializer,
 )
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 class RegisterView(generics.CreateAPIView):
@@ -35,6 +37,11 @@ class GetProfileView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated, OwnerProfilePermission)
     serializer_class = ProfileSerializer
+
+
+class TokenObtainPairView(TokenObtainPairView):
+    permission_classes = (AllowAny,)
+    serializer_class = TokenObtainPairSerializer
 
 
 class LogoutView(APIView):
