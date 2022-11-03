@@ -162,9 +162,9 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "www.test-cors.org",
-    "localhost",
+    "http://localhost",
 ]
 
-CSRF_TRUSTED_ORIGINS = ["www.test-cors.org", "localhost"]
+CSRF_TRUSTED_ORIGINS = ["www.test-cors.org", "http://localhost"]
 
 CORS_ALLOW_CREDENTIALS = True
