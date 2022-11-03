@@ -16,9 +16,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useState } from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
+import { useContext, useEffect, useState } from 'react';
+
 
 
 const theme = createTheme();
@@ -26,6 +27,8 @@ const theme = createTheme();
 export default function InitialSetup() {
 
     const [gender,setGender] = useState();
+
+    
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -55,6 +58,7 @@ export default function InitialSetup() {
       </AppBar>
           <Container component="main" maxWidth="xl">
             <CssBaseline />
+            
             <Box
               sx={{
                 marginTop: 8,
@@ -70,6 +74,7 @@ export default function InitialSetup() {
                 Complete your profile for our recommendation Engine
               </Typography>
               <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+              
                 {/* <InputLabel id="demo-simple-select-label">Gender</InputLabel> */}
                 <Select
                     // labelId="demo-simple-select-label"
