@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Album(models.Model):
-    _id = models.CharField(max_length=50)
+    _id = models.CharField(max_length=50, primary_key=True)
     title = models.CharField(max_length=500)
     release_year = models.CharField(max_length=10)
     cover_image = models.URLField()
@@ -12,7 +12,7 @@ class Album(models.Model):
 
 
 class Genre(models.Model):
-    _id = models.CharField(max_length=50)
+    _id = models.CharField(max_length=50, primary_key=True)
     title = models.CharField(max_length=50)
 
     def __str__(self):
@@ -20,7 +20,7 @@ class Genre(models.Model):
 
 
 class Artist(models.Model):
-    _id = models.CharField(max_length=50)
+    _id = models.CharField(max_length=50, primary_key=True)
     musicbrainz_id = models.CharField(max_length=100)
     name = models.CharField(max_length=500)
 
@@ -28,9 +28,8 @@ class Artist(models.Model):
         return self.name
 
 
-# Create your models here.
 class Track(models.Model):
-    _id = models.CharField(max_length=25)
+    _id = models.CharField(max_length=25, primary_key=True)
     title = models.CharField(max_length=500)
     playback_duration = models.FloatField()
 
