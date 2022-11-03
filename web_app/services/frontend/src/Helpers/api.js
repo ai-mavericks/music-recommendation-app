@@ -47,6 +47,10 @@ const Logout = (refreshToken) => {
 
 }
 
+const GetUserProfile = (userid) => {
+
+}
+
 
 const APICalls = {
     Login,

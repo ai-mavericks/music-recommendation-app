@@ -23,19 +23,31 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import * as ROUTES from "../../Helpers/routes"
 
 export default function Dashboard() {
 
+  const navigate = useNavigate();
 
     useEffect(() => {
         // axios.get('https://ui-avatars.com/api/?name='+userName).then((response) => {
         //     console.log(response)
-        setProfileImageLink('https://ui-avatars.com/api/?rounded=true&&name='+userName);
+        if(localStorage.getItem('refresh')){
+          var userName = localStorage.getItem('firstName') + '+' + localStorage.getItem('lastName')
+          console.log(userName)
+          setUserName(userName)
+          setProfileImageLink('https://ui-avatars.com/api/?rounded=true&&name='+userName);
+        }
+        else{
+          navigate(ROUTES.LOGIN)
+        }
+
 
       }, []);
 
     const [profileImageLink, setProfileImageLink] = useState();
-    const [userName, setUserName] = useState("Jatin+Arora");
+    const [userName, setUserName] = useState('');
 
     const TopBar = () => {
         return(

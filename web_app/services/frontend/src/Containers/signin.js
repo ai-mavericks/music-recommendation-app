@@ -72,11 +72,16 @@ export default function SignIn() {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
-    
+    setLoginStarted(true)
     var data = await APICalls.Login(userName,password)
     if(data)
     {
       setLoginStarted(true)
+      localStorage.setItem('access', data.access)
+      localStorage.setItem('refresh', data.refresh)
+      localStorage.setItem('firstName', "Rishabh")
+      localStorage.setItem('lastName', "Malhotra")
+      localStorage.setItem('userLoggedIn', true)
       navigate(ROUTES.DASHBOARD)
       setLoginStarted(false)
     }
