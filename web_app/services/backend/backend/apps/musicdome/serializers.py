@@ -21,10 +21,6 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 
 class TrackSerializer(serializers.ModelSerializer):
-    genres = GenreSerializer(many=True)
-    artists = ArtistSerializer(many=True)
-    albums = AlbumSerializer(many=True)
-
     class Meta:
         model = Track
         fields = "__all__"
