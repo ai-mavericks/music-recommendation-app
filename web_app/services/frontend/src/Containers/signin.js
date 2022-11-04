@@ -14,6 +14,16 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
+import APICalls from '../Helpers/api'
+import {useState} from 'react'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import * as ROUTES from "../Helpers/routes"
+import { useNavigate } from 'react-router-dom';
+import {useEffect} from 'react'
+
+// import { connect } from 'react-redux';
+// import * as actions from '../../actions'; 
 
 function Copyright(props) {
   return (
@@ -31,17 +41,64 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginFailed, setLoginFailed] = useState(false);
+  const [loginStarted, setLoginStarted] = useState(false);
+  const navigate = useNavigate();
+
+
+  useEffect(()=>{
+    var loggedIn = (localStorage.getItem("userLoggedIn")=='true');
+    {loggedIn && navigate(ROUTES.DASHBOARD)}
+    // {!loggedIn && navigate(ROUTES.LOGIN)}
+})
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const errorSnackbar = () => {
+    return(
+      <Snackbar open={loginFailed} autoHideDuration={3000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose}  severity="error" sx={{ width: '100%' }}>
+          Wrong Credentials. Please try again
+        </Alert>
+      </Snackbar>
+    )
+  }
+
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setLoginFailed(false);
+  };
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    var data = await APICalls.Login(userName,password)
+    if(data)
+    {
+      setLoginStarted(true)
+      localStorage.setItem('access', data.access)
+      localStorage.setItem('refresh', data.refresh)
+      localStorage.setItem('firstName', "Rishabh")
+      localStorage.setItem('lastName', "Malhotra")
+      localStorage.setItem('userLoggedIn', "true")
+      navigate(ROUTES.DASHBOARD)
+      setLoginStarted(false)
+    }
+    else{
+      setLoginFailed(true)
+    }
   };
 
   return (
     <ThemeProvider theme={theme}>
+      {errorSnackbar()}
       <AppBar
         position="absolute"
         color="default"
@@ -78,10 +135,14 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              value={userName}
+              onChange={(event) => {
+                setUserName(event.target.value);
+              }}
+              autoComplete="username"
               autoFocus
             />
             <TextField
@@ -92,26 +153,40 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
-            <Button
+            /> */}
+            {!loginStarted &&<Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
+            </Button>}
+            {loginStarted && <Button
+              type="submit"
+              fullWidth
+              disabled
+              variant="contained"
+              sx={{ mt: 3, mb: 2, backgroundColor: 'green' }}
+            >
+              Logging In
             </Button>
+            }
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Link href="/resetpassword" variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
