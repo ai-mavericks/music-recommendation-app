@@ -9,7 +9,7 @@ from .serializers import (
 from rest_framework.permissions import IsAuthenticated
 from .models import Track, Album, Artist, Genre, UserPreferences
 from .pagination import TrackSetPagination
-from .permissions import OwnerProfilePermission
+from .permissions import IsCreator
 
 
 class TrackViewSet(ModelViewSet):
@@ -42,4 +42,4 @@ class UserPreferencesViewSet(ModelViewSet):
     serializer_class = UserPreferencesSerializer
     queryset = UserPreferences.objects.all()
     pagination_class = None
-    # permission_classes = (IsAuthenticated, OwnerProfilePermission)
+    # permission_classes = (IsAuthenticated, IsCreator)
