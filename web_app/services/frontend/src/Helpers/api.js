@@ -50,12 +50,11 @@ const RefreshToken = (refreshToken) => {
 
 }
 
-const Logout = async(refreshToken) => {
+const Logout = async() => {
 
-    var axios = require('axios');
     var FormData = require('form-data');
     var data = new FormData();
-    data.append('refresh', refreshToken);
+    data.append('refresh', localStorage.getItem('refresh'));
 
     var config = {
     method: 'post',
@@ -79,8 +78,32 @@ const Logout = async(refreshToken) => {
 
 }
 
-const GetUserProfile = (userid) => {  
+const GetUserProfile = async(userid) => {  
 
+    var FormData = require('form-data');
+    var data = new FormData();
+
+    var config = {
+    method: 'get',
+    url: apiAuthUrl+'get_profile/'+userid+'/',
+    headers: { 
+        'Authorization': 'Bearer ' + localStorage.getItem('access'), 
+    },
+    data : data
+    };
+
+    try{
+        var res = await axios(config)
+        .then(function (response) {
+        return((response));
+        })
+        .catch(function (error) {
+        return(error);
+        });
+        var data = await res.data
+        return data
+    }
+    catch { return null}
 }
 
 const GetTracks = async(page) => {
@@ -217,7 +240,8 @@ const APICalls = {
     GetTracks,
     GetAlbum,
     GetArtist,
-    GetGenre
+    GetGenre,
+    GetUserProfile
 }
 
 export default APICalls;

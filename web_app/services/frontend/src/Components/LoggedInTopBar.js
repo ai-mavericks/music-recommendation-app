@@ -15,6 +15,7 @@ import { AppBar, Toolbar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import * as ROUTES from "../Helpers/routes"
 import { useContext, useEffect, useState } from 'react';
+import APICalls from '../Helpers/api';
 
 
 
@@ -30,7 +31,9 @@ export default function LoggedInTopBar() {
     setAnchorEl(null);
   };
 
-  const handleLogOutClick = () => {
+  const handleLogOutClick = async() => {
+
+    // await APICalls.Logout();
     localStorage.setItem('refresh',null)
     localStorage.setItem('access',null)
     localStorage.setItem('firstName',null)
