@@ -20,6 +20,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import * as ROUTES from "../Helpers/routes"
 import { useNavigate } from 'react-router-dom';
+import {useEffect} from 'react'
 
 // import { connect } from 'react-redux';
 // import * as actions from '../../actions'; 
@@ -41,12 +42,18 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-  const [userName, setUserName] = useState('rishabh2192');
-  const [password, setPassword] = useState('password@1234');
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
   const [loginFailed, setLoginFailed] = useState(false);
   const [loginStarted, setLoginStarted] = useState(false);
   const navigate = useNavigate();
 
+
+  useEffect(()=>{
+    var loggedIn = (localStorage.getItem("userLoggedIn")=='true');
+    {loggedIn && navigate(ROUTES.DASHBOARD)}
+    // {!loggedIn && navigate(ROUTES.LOGIN)}
+})
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -72,7 +79,6 @@ export default function SignIn() {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
-    setLoginStarted(true)
     var data = await APICalls.Login(userName,password)
     if(data)
     {
@@ -81,7 +87,7 @@ export default function SignIn() {
       localStorage.setItem('refresh', data.refresh)
       localStorage.setItem('firstName', "Rishabh")
       localStorage.setItem('lastName', "Malhotra")
-      localStorage.setItem('userLoggedIn', true)
+      localStorage.setItem('userLoggedIn', "true")
       navigate(ROUTES.DASHBOARD)
       setLoginStarted(false)
     }
