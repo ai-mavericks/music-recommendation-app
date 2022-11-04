@@ -155,16 +155,10 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=15),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=25),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=70),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://test-cors.org",
-    "http://localhost",
-]
-
-CSRF_TRUSTED_ORIGINS = ["http://test-cors.org", "http://localhost"]
-
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
