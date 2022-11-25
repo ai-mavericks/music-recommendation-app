@@ -5,12 +5,12 @@ import * as React from 'react';
 // const apiAuthUrl = process.env.REACT_APP_AUTH_API_URL
 // const apiAppUrl = process.env.REACT_APP_APP_API_URL
 
-const apiAuthUrl = 'http://18.222.117.235:8000/api/auth/'
-const apiAppUrl = 'http://18.222.117.235:8000/api/app/'
+// const apiAuthUrl = 'http://18.222.117.235:8000/api/auth/'
+// const apiAppUrl = 'http://18.222.117.235:8000/api/app/'
 
 
-// const apiAuthUrl = 'http://localhost:8000/auth/'
-// const apiAppUrl = 'http://localhost:8000/api/app/'
+const apiAuthUrl = 'http://localhost:8000/api/auth/'
+const apiAppUrl = 'http://localhost:8000/api/app/'
 
 const Login = async(username,password) => {
     console.log(username,password)
