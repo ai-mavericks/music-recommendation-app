@@ -14,6 +14,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
+import {useState} from 'react'
+import APICalls from '../Helpers/api'
+import * as ROUTES from "../Helpers/routes"
+import { useNavigate } from 'react-router-dom';
+
 
 function Copyright(props) {
   return (
@@ -31,14 +36,58 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    if(firstName !="" && lastName !="" && password!="" && email !="" && userName !="" )
+    {
+      var data = await APICalls.Register(userName,password,password,email,firstName,lastName)
+      console.log(data)
+      if(data.username == userName )
+      {
+        navigate(ROUTES.LOGIN)
+        setRegistrationFailed(false)
+
+      }
+      else
+      {
+        setRegistrationFailed(true)
+        var error = []
+        if(data.email)
+          error.push('* Email: ' + data.email);
+        if(data.username)
+          error.push('* Username: ' + data.username)
+        if(data.password)
+          error.push('* Password: ' + data.password)
+        
+        console.log(error)
+        setFullError(error)
+
+      }
+    }
+    else{
+      var error = []
+      error.push("No field can be empty")
+      setFullError(error)
+
+    }
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
   };
+
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('')
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [fullError, setFullError] = useState('');
+  const [registrationFailed, setRegistrationFailed] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,6 +133,10 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={firstName}
+                  onChange={(event) => {
+                    setFirstName(event.target.value);
+              }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -94,6 +147,10 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={lastName}
+                  onChange={(event) => {
+                    setLastName(event.target.value);
+              }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -104,6 +161,10 @@ export default function SignUp() {
                   label="Username"
                   name="username"
                   autoComplete="username"
+                  value={userName}
+                  onChange={(event) => {
+                    setUserName(event.target.value);
+              }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -114,6 +175,10 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+              }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -125,6 +190,10 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={password}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+              }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -136,6 +205,10 @@ export default function SignUp() {
                   type="confirm_password"
                   id="confirm_password"
                   autoComplete="confirm-password"
+                  value={password2}
+                  onChange={(event) => {
+                    setPassword2(event.target.value);
+              }}
                 />
               </Grid>
               {/* <Grid item xs={12}>
@@ -162,6 +235,12 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
+        <Box mt={2}>
+          {registrationFailed && 
+          fullError.map((error)=><Typography key={error} variant='p' color='red' display="block">{error}</Typography>)
+          }
+        </Box>
+        
         {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>

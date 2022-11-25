@@ -42,7 +42,47 @@ const Login = async(username,password) => {
 };
 
 
-const Register = (username,password,password2,email,firstname,lastname) => {
+const Register = async(username,password,password2,email,firstname,lastname) => {
+  
+    var FormData = require('form-data');
+    var data = new FormData();
+    data.append('username', username);
+    data.append('password', password);
+    data.append('password2', password2);
+    data.append('email', email);
+    data.append('first_name', firstname);
+    data.append('last_name', lastname);
+
+    var config = {
+    method: 'post',
+    url: apiAuthUrl+'register/',
+    headers: { 
+    },
+    data : data
+    };
+
+    try{
+        var res = await axios(config)
+        .then(function (response) {
+        return((response));
+        })
+        .catch(function (error) {
+        return(error);
+        });
+        if(res.data){
+            var data = await res.data
+            return data
+        }
+        else{
+            var data = await res.response.data
+            return data
+        }
+    }
+    catch(err)
+    { 
+        
+        console.log(err)
+    }
 
 }
 
