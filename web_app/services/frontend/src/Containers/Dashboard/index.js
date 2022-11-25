@@ -228,7 +228,7 @@ export default function Dashboard() {
                 {finalList?.slice(0,loadIndex).map((track) => {
                     return(
                         <Grid item key={track.id} xs={12} sm={6} md={2}  >
-                            <Card style={styles.card}  
+                            <Card style={styles.card}  onClick={()=>navigate(ROUTES.SONGDETAILS + '/' + track.id)}
                                 >
                                 <CardMedia
                                     component="img"

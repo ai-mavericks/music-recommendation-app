@@ -5,12 +5,12 @@ import * as React from 'react';
 // const apiAuthUrl = process.env.REACT_APP_AUTH_API_URL
 // const apiAppUrl = process.env.REACT_APP_APP_API_URL
 
-const apiAuthUrl = 'http://18.222.117.235:8000/api/auth/'
-const apiAppUrl = 'http://18.222.117.235:8000/api/app/'
+// const apiAuthUrl = 'http://18.222.117.235:8000/api/auth/'
+// const apiAppUrl = 'http://18.222.117.235:8000/api/app/'
 
 
-// const apiAuthUrl = 'http://localhost:8000/auth/'
-// const apiAppUrl = 'http://localhost:8000/api/app/'
+const apiAuthUrl = 'http://localhost:8000/api/auth/'
+const apiAppUrl = 'http://localhost:8000/api/app/'
 
 const Login = async(username,password) => {
     console.log(username,password)
@@ -42,7 +42,47 @@ const Login = async(username,password) => {
 };
 
 
-const Register = (username,password,password2,email,firstname,lastname) => {
+const Register = async(username,password,password2,email,firstname,lastname) => {
+  
+    var FormData = require('form-data');
+    var data = new FormData();
+    data.append('username', username);
+    data.append('password', password);
+    data.append('password2', password2);
+    data.append('email', email);
+    data.append('first_name', firstname);
+    data.append('last_name', lastname);
+
+    var config = {
+    method: 'post',
+    url: apiAuthUrl+'register/',
+    headers: { 
+    },
+    data : data
+    };
+
+    try{
+        var res = await axios(config)
+        .then(function (response) {
+        return((response));
+        })
+        .catch(function (error) {
+        return(error);
+        });
+        if(res.data){
+            var data = await res.data
+            return data
+        }
+        else{
+            var data = await res.response.data
+            return data
+        }
+    }
+    catch(err)
+    { 
+        
+        console.log(err)
+    }
 
 }
 
@@ -112,6 +152,37 @@ const GetTracks = async(page) => {
     var config = {
     method: 'get',
     url: apiAppUrl+'track/?page='+page,
+    headers: { 
+        'Authorization': 'Bearer ' + localStorage.getItem('access'), 
+    },
+    data : data
+    };
+
+    try 
+    {
+        var res = await axios(config)
+        .then(function (response) {
+        return((response));
+        })
+        .catch(function (error) {
+        return(error);
+        });
+        var data = await res.data.results
+        return data
+    }
+    catch(err)
+    {
+        return err
+    }
+
+}
+
+const GetTrackById = async(id) => {
+    var FormData = require('form-data');
+    var data = new FormData();
+    var config = {
+    method: 'get',
+    url: apiAppUrl+'track/'+id,
     headers: { 
         'Authorization': 'Bearer ' + localStorage.getItem('access'), 
     },
@@ -238,6 +309,7 @@ const APICalls = {
     RefreshToken,
     Logout,
     GetTracks,
+    GetTrackById,
     GetAlbum,
     GetArtist,
     GetGenre,
