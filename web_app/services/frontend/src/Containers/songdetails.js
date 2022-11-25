@@ -19,22 +19,20 @@ import APICalls from '../Helpers/api'
 import * as ROUTES from "../Helpers/routes"
 import { useNavigate, useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
+import LoggedInTopBar from '../Components/LoggedInTopBar';
 
 
 
 function SongDetails() {
 
     const {songId} = useParams();
-
-    useEffect(() => {
-      console.log("The song id is",songId )
-
-    });
     
     return (
-        <div>
+        
+        <Box>
+            <LoggedInTopBar/>
             <Typography>{songId}</Typography>
-        </div>
+        </Box>
     );
 }
 

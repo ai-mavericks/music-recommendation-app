@@ -177,36 +177,36 @@ const GetTracks = async(page) => {
 
 }
 
-// const GetTrackById = async(page) => {
-//     var FormData = require('form-data');
-//     var data = new FormData();
-//     var config = {
-//     method: 'get',
-//     url: apiAppUrl+'track/?page='+page,
-//     headers: { 
-//         'Authorization': 'Bearer ' + localStorage.getItem('access'), 
-//     },
-//     data : data
-//     };
+const GetTrackById = async(id) => {
+    var FormData = require('form-data');
+    var data = new FormData();
+    var config = {
+    method: 'get',
+    url: apiAppUrl+'track/'+id,
+    headers: { 
+        'Authorization': 'Bearer ' + localStorage.getItem('access'), 
+    },
+    data : data
+    };
 
-//     try 
-//     {
-//         var res = await axios(config)
-//         .then(function (response) {
-//         return((response));
-//         })
-//         .catch(function (error) {
-//         return(error);
-//         });
-//         var data = await res.data.results
-//         return data
-//     }
-//     catch(err)
-//     {
-//         return err
-//     }
+    try 
+    {
+        var res = await axios(config)
+        .then(function (response) {
+        return((response));
+        })
+        .catch(function (error) {
+        return(error);
+        });
+        var data = await res.data.results
+        return data
+    }
+    catch(err)
+    {
+        return err
+    }
 
-// }
+}
 
 const GetAlbum = async(albumId) => {
     var FormData = require('form-data');
@@ -309,6 +309,7 @@ const APICalls = {
     RefreshToken,
     Logout,
     GetTracks,
+    GetTrackById,
     GetAlbum,
     GetArtist,
     GetGenre,
