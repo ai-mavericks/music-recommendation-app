@@ -26,12 +26,36 @@ import LoggedInTopBar from '../Components/LoggedInTopBar';
 function SongDetails() {
 
     const {songId} = useParams();
+    const [trackDetails,setTrackDetails] = useState('')
+
+    useEffect(() => {        
+        getDetails(songId)
+    },[])
+    
+
+    const getDetails = async(songId) => {
+        var details = await getTracksDetails(songId)
+        console.log(songId)
+        console.log(details)
+        setTrackDetails(details)
+    }
+
+    const getTracksDetails = async(songId) => {
+        
+
+        console.log("function started")
+        var trackDetails = await APICalls.GetTrackById(songId)
+        console.log("function Edded")
+        console.log(trackDetails)
+        return trackDetails
+      }
     
     return (
         
         <Box>
             <LoggedInTopBar/>
-            <Typography>{songId}</Typography>
+            {/* <Typography>{trackDetails._id}</Typography>
+            <Typography>{trackDetails.album}</Typography> */}
         </Box>
     );
 }
