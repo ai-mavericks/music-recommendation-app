@@ -54,11 +54,10 @@ class AlbumViewSet(ReadOnlyModelViewSet):
 
 
 class UserPreferencesViewSet(ModelViewSet):
-
-    serializer_class = UserPreferencesSerializer
     queryset = UserPreferences.objects.all()
     pagination_class = None
     permission_classes = (IsAuthenticated, IsCreator)
+    serializer_class = UserPreferencesSerializer
     
     
 class FeedbackViewSet(ModelViewSet):
