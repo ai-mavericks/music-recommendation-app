@@ -2,9 +2,10 @@ import "./App.css";
 import SignIn from "./Containers/signin";
 import SignUp from "./Containers/register";
 import ProfileSetup from "./Containers/InitialSetup/index";
+import AlbumSelect from "./Containers/InitialSetup/albumSelect";
 import Dashboard from "./Containers/Dashboard/index";
 import HomePage from "./Containers/HomePage";
-import SongDetails from "./Containers/SongDetails";
+import SongDetails from "./Containers/songdetails";
 import * as ROUTES from "./Helpers/routes";
 import { useContext, useEffect, useState } from 'react';
 
@@ -36,6 +37,7 @@ function App() {
           <Route exact path={ROUTES.LOGIN} element={<SignIn />}/>
           <Route exact path={ROUTES.REGISTER} element={<SignUp />}/>
           <Route exact path={ROUTES.INITIALSETUP} element={<ProfileSetup />}/>
+          <Route exact path={ROUTES.ALBULSELECT} element={<AlbumSelect />}/>
           <Route exact path={ROUTES.DASHBOARD} element={<Dashboard />}/>
           <Route exact path={ROUTES.SONGDETAILS+`/:songId`} element={<SongDetails />}/>
 

@@ -27,15 +27,39 @@ import CardMedia from '@mui/material/CardMedia';
 import { border, style } from '@mui/system';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as ROUTES from "../../Helpers/routes"
+import LoggedInTopBar from '../../Components/LoggedInTopBar';
 
 
+const theme = createTheme();
 
-export default function GenreSelect() {
-
+export default function AlbumSelect() {
 
     const navigate = useNavigate();
 
-    const [genres, setGenres] = useState( 
+
+    const TopBar = () => {
+        return(
+            <AppBar
+        position="absolute"
+        color="default"
+        elevation={0}
+        sx={{
+          position: 'relative',
+          backgroundColor: '#1976d2',
+          color: 'white',
+          borderBottom: (t) => `1px solid ${t.palette.divider}`,
+        }}
+      >
+        <Toolbar>
+          <Typography variant="h6" color="inherit" noWrap>
+            MusicDom - Music Recommendation System
+          </Typography>
+        </Toolbar>
+      </AppBar>
+        );
+    };
+
+    const [albums, setAlbums] = useState( 
     [
         {
             "id" : 1,
@@ -74,7 +98,7 @@ export default function GenreSelect() {
         },
         {
             "id" : 15,
-            "name": "great",
+            "name": "rock",
             "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
         },
         {
@@ -146,20 +170,10 @@ export default function GenreSelect() {
         },
     }
 
-    const genreView = () => {
-        <Box>
-            <Card >
-                <div style={{ position: "relative" }}>      
-                    <CardMedia style={{ height: "250px", paddingTop: "2%" }}   component="img" image={"/pancakes.jpg"} title="Pancakes" alt="Pancakes"/> 
-                    
-                    <div style={{position: "absolute", color: "white",top: 10,left: "50%",transform: "translateX(-50%)",}}> Some text</div>  
-                </div>
-            </Card>
-        </Box>
-    }
 
 
-    const [selectedGenres, setSelectedGenres] = useState([]);
+
+    const [selectedAlbums, setSelectedAlbums] = useState([]);
     const [loadIndex, setLoadIndex] = useState(10);
     const cardElement = useRef(new Array());
 
@@ -168,18 +182,18 @@ export default function GenreSelect() {
     }
 
     const handleProceedButton = () => {
-        navigate(ROUTES.ALBULSELECT)
+        navigate(ROUTES.DASHBOARD)
     }
 
-    const handleGenreSelect = (genre) => {
+    const handleAlbumeSelect = (album) => {
 
-        if(selectedGenres.indexOf(genre) < 0 && selectedGenres.length <3 )
-            setSelectedGenres([...selectedGenres,genre])
+        if(selectedAlbums.indexOf(album) < 0 && selectedAlbums.length <5 )
+        setSelectedAlbums([...selectedAlbums,album])
         else
         {
-            var index = selectedGenres.indexOf(genre)
+            var index = selectedAlbums.indexOf(album)
             if(index>-1)
-                setSelectedGenres([...selectedGenres.slice(0, index),...selectedGenres.slice(index+1)]);
+            setSelectedAlbums([...selectedAlbums.slice(0, index),...selectedAlbums.slice(index+1)]);
 
             // var array = selectedGenres; // make a separate copy of the array
             // var index = array.indexOf(genre)
@@ -189,28 +203,30 @@ export default function GenreSelect() {
             // }
         }
 
-        console.log(selectedGenres)
+        console.log(selectedAlbums)
     }
 
     return(
+        <ThemeProvider theme={theme}>
+        <LoggedInTopBar/>
         <Box m={(4)}>
-            <Typography variant="h3">Select Three Genres you Like</Typography>
+            <Typography variant="h3">Select Five Artists you Like</Typography>
             <Grid mt={2} container spacing={4} alignItems='center'>
-                {genres?.slice(0,loadIndex).map((genre) => {
+                {albums?.slice(0,loadIndex).map((album) => {
                     return(
-                        <Grid item key={genre.id} xs={12} sm={6} md={2}  >
-                            <Card style={selectedGenres.indexOf(genre) >-1 ?styles.selectedCard:styles.card}  onClick={()=>handleGenreSelect(genre)}
+                        <Grid item key={albums.id} xs={12} sm={6} md={2}  >
+                            <Card style={selectedAlbums.indexOf(album) >-1 ?styles.selectedCard:styles.card}  onClick={()=>handleAlbumeSelect(album)}
                                 >
                                 <CardMedia
                                     component="img"
                                     style = {{objectFit: 'cover'}}
                                     // style={styles.media}
                                     // image={genre.imgUrl}
-                                    image={`https://picsum.photos/seed/${genre.name}/400`}
-                                    alt={genre.name}
+                                    image={`https://picsum.photos/seed/${album.name}/400`}
+                                    alt={album.name}
                                 />
                                 <CardContent >
-                                   <Typography style={{fontSize:'24px', textAlign:'center', fontWeight:'bolder'}}>{genre.name}</Typography>
+                                   <Typography style={{fontSize:'24px', textAlign:'center', fontWeight:'bolder'}}>{album.name}</Typography>
                                 </CardContent>
                                 {/* <div style={styles.overlay}>{genre.name}</div> */}
                             </Card> 
@@ -221,7 +237,7 @@ export default function GenreSelect() {
                 <Grid item xs={12} sm={6} md={2}>
                     <div > 
                     
-                    {selectedGenres.length == 3 && (
+                    {selectedAlbums.length == 5 && (
                         // <Button 
                         //     style={{fontSize: '30px' }} 
                         //     onClick={handleLoadMoreButtonClick}
@@ -232,7 +248,7 @@ export default function GenreSelect() {
                         style={{fontSize: '30px', backgroundColor:'#28b337', color:'black' }} 
                         onClick={handleProceedButton}
                     >
-                        PROCEED
+                        Get Recommendations
                     </Button>
                 )}
                 
@@ -243,6 +259,7 @@ export default function GenreSelect() {
             
 
         </Box>
+        </ThemeProvider>
     )
 
 }

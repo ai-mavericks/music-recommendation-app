@@ -34,7 +34,8 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// <-- import styles to be used
 
 export default function Dashboard() {
 
@@ -238,7 +239,10 @@ export default function Dashboard() {
                                     alt={track.title}
                                 />
                                 <CardContent>
+
                                   <Typography>{track.title}</Typography>
+                                  <i class="fa-regular fa-heart"></i>
+                                  <FontAwesomeIcon icon="fa-regular fa-heart" />
                                 </CardContent>
                                 
                             </Card> 

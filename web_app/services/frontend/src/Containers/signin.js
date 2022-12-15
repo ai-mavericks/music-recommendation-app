@@ -38,11 +38,12 @@ export default function SignIn() {
   const navigate = useNavigate();
 
 
-  useEffect(()=>{
-    var loggedIn = (localStorage.getItem("userLoggedIn")=='true');
-    {loggedIn && navigate(ROUTES.DASHBOARD)}
-    // {!loggedIn && navigate(ROUTES.LOGIN)}
-})
+//   useEffect(()=>{
+//     var loggedIn = (localStorage.getItem("userLoggedIn")=='true');
+
+//     {loggedIn && navigate(ROUTES.DASHBOARD)}
+//     // {!loggedIn && navigate(ROUTES.LOGIN)}
+// })
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -69,6 +70,7 @@ export default function SignIn() {
   const handleSubmit = async(event) => {
     event.preventDefault();
     var data = await APICalls.Login(userName,password)
+    console.log(data)
     if(data)
     {
       setLoginStarted(true)
@@ -81,13 +83,49 @@ export default function SignIn() {
       localStorage.setItem('firstName', profileData.first_name)
       localStorage.setItem('lastName', profileData.last_name)
       localStorage.setItem('userLoggedIn', "true")
-      navigate(ROUTES.DASHBOARD)
+      localStorage.setItem('userid', data.id)
+      await getIsPreferenceSet(data.id)
+      // navigate(ROUTES.DASHBOARD)
       setLoginStarted(false)
     }
     else{
       setLoginFailed(true)
     }
   };
+
+  const getIsPreferenceSet = async(userID) => {
+    var data = await APICalls.GetPreference()
+    console.log(data)
+    if(data)
+    {
+      var userData = null
+      data.map((detail)=>
+      {
+        if(detail.user == userID)
+            userData = detail
+      });
+
+      if(userData)
+      {
+        if(userData.genres.length == 2){
+
+          if(userData.artists.length == 2){
+            navigate(ROUTES.DASHBOARD)
+          }
+          else{
+            navigate(ROUTES.ALBULSELECT)
+          }
+        }
+        else{
+          navigate(ROUTES.INITIALSETUP)
+        }
+      }
+      else
+      {
+        navigate(ROUTES.INITIALSETUP)   
+      }
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>

@@ -302,6 +302,38 @@ const GetGenre = async(genreId) => {
 
 }
 
+const GetPreference = async() => {
+    var FormData = require('form-data');
+    var data = new FormData();
+    var config = {
+    method: 'get',
+    url: apiAppUrl+'preference',
+    headers: { 
+        'Authorization': 'Bearer ' + localStorage.getItem('access'), 
+    },
+    data : data
+    };
+
+    try 
+    {
+        var res = await axios(config)
+        .then(function (response) {
+        return((response));
+        })
+        .catch(function (error) {
+        return(error);
+        });
+        var data = await res.data
+        return data
+    }
+    catch(err)
+    {
+        return err
+    }
+
+}
+
+
 
 const APICalls = {
     Login,
@@ -313,7 +345,8 @@ const APICalls = {
     GetAlbum,
     GetArtist,
     GetGenre,
-    GetUserProfile
+    GetUserProfile,
+    GetPreference
 }
 
 export default APICalls;
