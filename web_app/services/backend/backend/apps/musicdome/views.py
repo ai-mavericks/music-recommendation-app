@@ -8,6 +8,8 @@ from .serializers import (
     FeedbackSerializer,
     GetTopGenreSerializer
 )
+import random
+from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from .models import Track, Album, Artist, Genre, UserPreferences, Feedback
 from .pagination import TrackSetPagination
@@ -33,6 +35,22 @@ class TrackViewSet(ModelViewSet):
     def artist_count(self, request, *args, **kwargs):
         queryset = list(Track.objects.all().values('artists').annotate(total=Count('artists')).order_by('-total')[0:20])
         return JsonResponse(queryset, safe=False)
+    
+    # @action(detail=False, methods=['GET'], name='Dashboard')
+    # def build_dash(self, request, *args, **kwargs):
+    #     queryset=
+    
+    @action(detail=False, methods=['GET'], name='Record')
+    def rec_req(self, request, *args, **kwargs):
+        # track_id = get_object_or_404(Track, pk=request.track)
+        # field_object = MyModel._meta.get_field("artists__name")
+        # artist_id = value_from_object()
+        tracks = list(Track.objects.all())
+        tracks = random.sample(tracks, 50)
+        
+        serializer = self.get_serializer(tracks,many=True)
+        
+        return Response(serializer.data)
 
 
 class GenreViewSet(ReadOnlyModelViewSet):
