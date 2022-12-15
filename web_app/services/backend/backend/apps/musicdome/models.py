@@ -40,6 +40,11 @@ class Track(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Feedback(models.Model):
+    user = models.ManyToManyField(User)
+    track = models.ManyToManyField(Track)
+    feedback = models.BooleanField()
 
 
 class UserPreferences(models.Model):
