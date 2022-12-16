@@ -54,8 +54,8 @@ function SongDetails() {
         
         <Box>
             <LoggedInTopBar/>
-            {/* <Typography>{trackDetails._id}</Typography>
-            <Typography>{trackDetails.album}</Typography> */}
+            <Typography>{trackDetails._id}</Typography>
+            <Typography>{trackDetails.album}</Typography>
         </Box>
     );
 }

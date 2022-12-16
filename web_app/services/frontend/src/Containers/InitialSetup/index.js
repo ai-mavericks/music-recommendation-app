@@ -20,6 +20,8 @@ import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import { useContext, useEffect, useState } from 'react';
 import GenreSelect from './genreSelect'
+import LoggedInTopBar from '../../Components/LoggedInTopBar';
+
 
 
 const theme = createTheme();
@@ -51,7 +53,7 @@ export default function ProfileSetup() {
 
     return(
       <ThemeProvider theme={theme}>
-         {TopBar()} 
+         <LoggedInTopBar/>
          <GenreSelect/>
        </ThemeProvider>
     );

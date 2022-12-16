@@ -25,88 +25,66 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { border, style } from '@mui/system';
+import { useNavigate, useParams } from 'react-router-dom';
+import * as ROUTES from "../../Helpers/routes"
+import APICalls from '../../Helpers/api';
+
 
 
 export default function GenreSelect() {
 
+
+    const navigate = useNavigate();
+
+    const topGenres = [
+        {"genres": "GR8JIQ0MT3H66P6VJK", "total": 1304},
+         {"genres": "GR7RWUBIXEKKRALCRM", "total": 1093},
+          {"genres": "GRWTN6SP41VUYFWK15", "total": 8},
+           {"genres": "GRV6EIQOAXN8F529SX", "total": 7},
+            {"genres": "GR717HV903KVD6SXXL", "total": 7}
+        ];
+    
+    const getTopGenresDetails = async() => {
+
+        var detail = await APICalls.GetGenre("GR717HV903KVD6SXXL")
+        console.log(detail)
+
+    }
+
+    useEffect(() => {
+        getTopGenresDetails()
+
+    }, [])
+    
+
     const [genres, setGenres] = useState( 
     [
         {
-            "id" : 1,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "GR8JIQ0MT3H66P6VJK",
+            "name": "RAP",
+            "imgUrl" : "https://eastside-online.org/wp-content/uploads/2019/01/Rap-copy-900x600.jpg"
         },
         {
-            "id" : 2,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "GR7RWUBIXEKKRALCRM",
+            "name": "POP ROCK",
+            "imgUrl" : "https://yt3.ggpht.com/ytc/AMLnZu9qpll29_akZqlcWYUtIzU2KIzFr1yvfPG2YDPx=s900-c-k-c0x00ffffff-no-rj"
         },
         {
-            "id" : 3,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "GRWTN6SP41VUYFWK15",
+            "name": "ELECTRONIC",
+            "imgUrl" : "https://www.dancemusicnw.com/wp-content/uploads/2017/03/Electronic-Music-Art-Wallpaper-Electronic-wallpaper-1600-x-e1488600068366.jpg"
         },
         {
-            "id" : 4,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "GRV6EIQOAXN8F529SX",
+            "name": "RnB",
+            "imgUrl" : "https://play-lh.googleusercontent.com/CLd32TFqjbxz4Jig44FKncd4tBWnQ2RW4xwKBZpem4Q7tv678fmYatjOW9TGyiisRXg=w240-h480-rw"
         },
         {
-            "id" : 5,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "GR717HV903KVD6SXXL",
+            "name": "JAZZ",
+            "imgUrl" : "https://media1.fdncms.com/rochester/imager/u/original/10434163/large-magnum.jpg"
         },
-        {
-            "id" : 6,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 7,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 15,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 8,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 9,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 10,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 11,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 12,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 13,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 14,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-
+        
     ]);
 
     const styles = {
@@ -125,7 +103,7 @@ export default function GenreSelect() {
         selectedCard: {
             position: 'relative',
             cursor: 'pointer',
-            border: 'solid 5px green'
+            border: 'solid 15px green'
         },
         overlay: {
             position: 'absolute',
@@ -145,6 +123,7 @@ export default function GenreSelect() {
             <Card >
                 <div style={{ position: "relative" }}>      
                     <CardMedia style={{ height: "250px", paddingTop: "2%" }}   component="img" image={"/pancakes.jpg"} title="Pancakes" alt="Pancakes"/> 
+                    
                     <div style={{position: "absolute", color: "white",top: 10,left: "50%",transform: "translateX(-50%)",}}> Some text</div>  
                 </div>
             </Card>
@@ -153,16 +132,29 @@ export default function GenreSelect() {
 
 
     const [selectedGenres, setSelectedGenres] = useState([]);
-    const [loadIndex, setLoadIndex] = useState(11);
+    const [loadIndex, setLoadIndex] = useState(10);
     const cardElement = useRef(new Array());
 
     const handleLoadMoreButtonClick = () => {
-        setLoadIndex(loadIndex + 6)
+        setLoadIndex(loadIndex + 4)
+    }
+
+    const handleProceedButton = async() => {
+        navigate(ROUTES.ALBULSELECT)
+        const selected = []
+        for(var genre in selectedGenres){
+            selected.push(genre.id)
+        }
+        console.log("genresPreference",selectedGenres)
+        console.log(selected)
+        // localStorage.setItem('genresPreference', selected)
+
+
     }
 
     const handleGenreSelect = (genre) => {
 
-        if(selectedGenres.indexOf(genre) < 0 && selectedGenres.length <5 )
+        if(selectedGenres.indexOf(genre) < 0 && selectedGenres.length <2 )
             setSelectedGenres([...selectedGenres,genre])
         else
         {
@@ -183,11 +175,11 @@ export default function GenreSelect() {
 
     return(
         <Box m={(4)}>
-            <Typography variant="h3">Select Five Genres you Like</Typography>
+            <Typography variant="h3">Select Two Genres you Like</Typography>
             <Grid mt={2} container spacing={4} alignItems='center'>
                 {genres?.slice(0,loadIndex).map((genre) => {
                     return(
-                        <Grid item key={genre.id} xs={12} sm={6} md={2}  >
+                        <Grid item key={genre.id} xs={12} sm={6} md={3}  >
                             <Card style={selectedGenres.indexOf(genre) >-1 ?styles.selectedCard:styles.card}  onClick={()=>handleGenreSelect(genre)}
                                 >
                                 <CardMedia
@@ -195,23 +187,34 @@ export default function GenreSelect() {
                                     style = {{objectFit: 'cover'}}
                                     // style={styles.media}
                                     image={genre.imgUrl}
+                                    // image={`https://picsum.photos/seed/${genre.name}/400`}
                                     alt={genre.name}
                                 />
-                                <div style={styles.overlay}>{genre.name}</div>
+                                {/* <CardContent >
+                                   <Typography style={{fontSize:'24px', textAlign:'center', fontWeight:'bolder'}}>{genre.name}</Typography>
+                                </CardContent> */}
+                                {/* <div style={styles.overlay}>{genre.name}</div> */}
                             </Card> 
                         </Grid>
                     )
                 })}
+
                 <Grid item xs={12} sm={6} md={2}>
                     <div > 
                     
-                    {loadIndex < genres?.length && (
+                    {selectedGenres.length == 2 && (
+                        // <Button 
+                        //     style={{fontSize: '30px' }} 
+                        //     onClick={handleLoadMoreButtonClick}
+                        // >
+                        //     Load more
+                        // </Button>
                         <Button 
-                            style={{fontSize: '30px' }} 
-                            onClick={handleLoadMoreButtonClick}
-                        >
-                            Load more
-                        </Button>
+                        style={{fontSize: '30px', backgroundColor:'#28b337', color:'black' }} 
+                        onClick={handleProceedButton}
+                    >
+                        PROCEED
+                    </Button>
                 )}
                 
                      
