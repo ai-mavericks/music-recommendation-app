@@ -29,6 +29,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as ROUTES from "../../Helpers/routes"
 import LoggedInTopBar from '../../Components/LoggedInTopBar';
 
+import APICalls from '../../Helpers/api';
+
 
 const theme = createTheme();
 
@@ -59,84 +61,71 @@ export default function AlbumSelect() {
         );
     };
 
+    const getTopGenresDetails = async() => {
+
+        var detail = await APICalls.GetArtist("ARGXIE31187FB55B48")
+        console.log(detail)
+
+    }
+
+    useEffect(() => {
+        getTopGenresDetails()
+
+    }, [])
+
     const [albums, setAlbums] = useState( 
     [
         {
-            "id" : 1,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "ARTH9041187FB43E1F",
+            "name": "Eminem",
+            "imgUrl" : "https://www.biography.com/.image/t_share/MTQ3NjM5MTEzMTc5MjEwODI2/eminem_photo_by_dave_j_hogan_getty_images_entertainment_getty_187596325.jpg"
         },
         {
-            "id" : 2,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "ARNHMFD1187FB3B3F6",
+            "name": "LL Cool J",
+            "imgUrl" : "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTd_TxvcPaGMuWAWFXhwqpKj9wglxMvszAjUtq1DePKuDcqvMiB7lIHUykldvWmJ60peNpTr8eBmyOUcmk"
         },
         {
-            "id" : 3,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "AR3MSAN1187B98F06B",
+            "name": "OutKast",
+            "imgUrl" : "https://i.guim.co.uk/img/media/80c9d0e44610c160bfc9065f28f6b26af4356cd1/0_294_2366_1419/master/2366.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=03bf76917d038f98a246116a54a8b49b"
         },
         {
-            "id" : 4,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "ARLHO5Z1187FB4C861",
+            "name": "Beastie Boys",
+            "imgUrl" : "https://images-prod.dazeddigital.com/1800/azure/dazed-prod/1190/5/1195187.jpg"
         },
         {
-            "id" : 5,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "ARX5TXV1187B9966DF",
+            "name": "Looptroop",
+            "imgUrl" : "https://i.discogs.com/Z5D2629MQxkOlTrxE_p3KOn6oIFweBwUbppiaf9I2DY/rs:fit/g:sm/q:90/h:400/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTkyMDIw/LTEzNjU2MjI2MzEt/NjUwMy5qcGVn.jpeg"
         },
         {
-            "id" : 6,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "ARVJBQA1187B9B7481",
+            "name": "Evergrey",
+            "imgUrl" : "https://evergrey.net/wp-content/uploads/2022/03/EVERGREY-MAIN-500x500.jpg"
         },
         {
-            "id" : 7,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "AR8RXRI1187FB4104B",
+            "name": "The Roots",
+            "imgUrl" : "https://m.media-amazon.com/images/M/MV5BMjM1NzQ0OTkwMF5BMl5BanBnXkFtZTgwMDE5MzgyOTE@._V1_.jpg"
         },
         {
-            "id" : 15,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "ARTXGGI1187B9B3D58",
+            "name": "Blackalicious",
+            "imgUrl" : "https://i.ytimg.com/vi/xxmmGToZlns/maxresdefault.jpg"
         },
         {
-            "id" : 8,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "ARF84A41187B9A34E7",
+            "name": "Rancid",
+            "imgUrl" : "https://townsquare.media/site/838/files/2019/06/rancid-2016.jpg?w=980&q=75"
         },
         {
-            "id" : 9,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
+            "id" : "ARGXIE31187FB55B48",
+            "name": "Tech N9ne",
+            "imgUrl" : "https://cdn.strangemusicinc.com/wp-content/uploads/2017/08/Tech-N9ne_Main-500x433.jpg"
         },
-        {
-            "id" : 10,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 11,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 12,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 13,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-        {
-            "id" : 14,
-            "name": "rock",
-            "imgUrl" : "https://image.shutterstock.com/image-vector/creative-logo-design-unique-symbol-260nw-643568482.jpg"
-        },
-
+        
     ]);
 
     const styles = {
@@ -221,8 +210,8 @@ export default function AlbumSelect() {
                                     component="img"
                                     style = {{objectFit: 'cover'}}
                                     // style={styles.media}
-                                    // image={genre.imgUrl}
-                                    image={`https://picsum.photos/seed/${album.name}/400`}
+                                    image={album.imgUrl}
+                                    // image={`https://picsum.photos/seed/${album.name}/400`}
                                     alt={album.name}
                                 />
                                 <CardContent >

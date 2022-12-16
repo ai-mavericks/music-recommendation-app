@@ -35,7 +35,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// <-- import styles to be used
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function Dashboard() {
 
@@ -229,7 +230,8 @@ export default function Dashboard() {
                 {finalList?.slice(0,loadIndex).map((track) => {
                     return(
                         <Grid item key={track.id} xs={12} sm={6} md={2}  >
-                            <Card style={styles.card}  onClick={()=>navigate(ROUTES.SONGDETAILS + '/' + track.id)}
+                            <Card style={styles.card}  
+                            // onClick={()=>navigate(ROUTES.SONGDETAILS + '/' + track.id)}
                                 >
                                 <CardMedia
                                     component="img"
@@ -241,8 +243,8 @@ export default function Dashboard() {
                                 <CardContent>
 
                                   <Typography>{track.title}</Typography>
-                                  <i class="fa-regular fa-heart"></i>
-                                  <FontAwesomeIcon icon="fa-regular fa-heart" />
+                                  {/* <i class="fa-regular fa-heart"></i>
+                                  <FontAwesomeIcon icon={faEnvelope} /> */}
                                 </CardContent>
                                 
                             </Card> 

@@ -177,6 +177,38 @@ const GetTracks = async(page) => {
 
 }
 
+const GetTopGenres = async(page) => {
+    var FormData = require('form-data');
+    var data = new FormData();
+    var config = {
+    method: 'get',
+    url: apiAppUrl+'track/genre_count',
+    headers: { 
+        'Authorization': 'Bearer ' + localStorage.getItem('access'), 
+    },
+    data : data
+    };
+
+    try 
+    {
+        var res = await axios(config)
+        .then(function (response) {
+        return((response));
+        })
+        .catch(function (error) {
+        return(error);
+        });
+        var data = await res.data.results
+        return data
+    }
+    catch(err)
+    {
+        return err
+    }
+
+}
+
+
 const GetTrackById = async(id) => {
     var FormData = require('form-data');
     var data = new FormData();
@@ -333,6 +365,47 @@ const GetPreference = async() => {
 
 }
 
+const SetGenres = async(genres) => {
+  
+    var FormData = require('form-data');
+    var data = new FormData();
+    data.append('user', 7);
+    data.append('genres', genres);
+    data.append('artists', [])
+
+    var config = {
+    method: 'post',
+    url: apiAppUrl+'preference/',
+    headers: { 
+        'Authorization': 'Bearer ' + localStorage.getItem('access'), 
+    },
+    data : data
+    };
+
+    try{
+        var res = await axios(config)
+        .then(function (response) {
+        return((response));
+        })
+        .catch(function (error) {
+        return(error);
+        });
+        if(res.data){
+            var data = await res.data
+            return data
+        }
+        else{
+            var data = await res.response.data
+            return data
+        }
+    }
+    catch(err)
+    { 
+        
+        console.log(err)
+    }
+
+}
 
 
 const APICalls = {
@@ -346,7 +419,9 @@ const APICalls = {
     GetArtist,
     GetGenre,
     GetUserProfile,
-    GetPreference
+    GetPreference,
+    GetTopGenres,
+    SetGenres
 }
 
 export default APICalls;

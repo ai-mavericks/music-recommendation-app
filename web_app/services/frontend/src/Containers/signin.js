@@ -107,18 +107,9 @@ export default function SignIn() {
 
       if(userData)
       {
-        if(userData.genres.length == 2){
-
-          if(userData.artists.length == 2){
-            navigate(ROUTES.DASHBOARD)
-          }
-          else{
-            navigate(ROUTES.ALBULSELECT)
-          }
-        }
-        else{
-          navigate(ROUTES.INITIALSETUP)
-        }
+        // navigate(ROUTES.INITIALSETUP)  
+        navigate(ROUTES.DASHBOARD)
+        
       }
       else
       {
